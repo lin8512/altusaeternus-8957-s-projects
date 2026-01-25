@@ -1,0 +1,13 @@
+# fastlane/Appfile
+# Package name (applicationId)
+package_name("com.aeternusaltus.app")
+
+# JSON key path used by CI (the workflow writes service account JSON to /tmp/play-service-account.json)
+json_key_file("/tmp/play-service-account.json")
+
+# Developer information (for reference)
+# Developer Name: catalin marinel
+# Organization: AETERNUS ALTUS SOCIEDAD LIMITADA.
+# Website: https://www.aeternusaltus.com/
+
+# NOTE: This file is intentionally minimal for CI. Local developers can override via fastlane ENV vars.
