@@ -1,0 +1,39 @@
+name: Build Flutter Android AAB (Release)
+
+on:
+  push:
+    branches: [ main ]          # Auto-build on push to main (optional)
+  workflow_dispatch:            # Manual trigger from GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest      # x86-64 runner → no arm64 mismatch
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.38.x'   # Matches your local version
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build App Bundle
+        run: flutter build appbundle --release --verbose   # --verbose for detailed logs if needed
+
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-aab
+          path: build/app/outputs/bundle/release/app-release.aab
+          retention-days: 14          # Keep artifacts for 2 weeks
